@@ -1,0 +1,63 @@
+[data-research-topic="fair"] {
+  --topic-background: #edf5ee;
+  --topic-border: #a7c4ae;
+  --topic-text: #274e34;
+}
+
+[data-research-topic="game"] {
+  --topic-background: #edf4fa;
+  --topic-border: #aac4db;
+  --topic-text: #244961;
+}
+
+[data-research-topic="multi-objective"] {
+  --topic-background: #f5eff8;
+  --topic-border: #c9b6d7;
+  --topic-text: #513761;
+}
+
+[data-research-topic="optimization"] {
+  --topic-background: #faf2e5;
+  --topic-border: #d5bd96;
+  --topic-text: #61451f;
+}
+
+.dark [data-research-topic="fair"] {
+  --topic-background: #202e25;
+  --topic-border: #54725d;
+  --topic-text: #cce6d2;
+}
+
+.dark [data-research-topic="game"] {
+  --topic-background: #1e2c37;
+  --topic-border: #4f6c82;
+  --topic-text: #cbe1f2;
+}
+
+.dark [data-research-topic="multi-objective"] {
+  --topic-background: #2b2333;
+  --topic-border: #715b83;
+  --topic-text: #e8d8f1;
+}
+
+.dark [data-research-topic="optimization"] {
+  --topic-background: #332b20;
+  --topic-border: #7a6546;
+  --topic-text: #f0dfc1;
+}
+
+.research-topic-card,
+.research-topic-tag,
+.filter-bar .filter-btn[data-research-topic] {
+  border: 1px solid var(--topic-border);
+  background-color: var(--topic-background);
+  color: var(--topic-text);
+}
+
+.filter-bar .filter-btn[data-research-topic] :is([data-filter-label], [data-filter-count]) {
+  color: inherit;
+}
+
+.filter-bar .filter-btn[data-research-topic][aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px currentColor;
+}
