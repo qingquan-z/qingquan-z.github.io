@@ -239,13 +239,13 @@ function isActiveNav(href: string): boolean {
 
     <slot name="head" />
     <style is:global>
-      *,
-      *::before,
-      *::after {
+      :where(*, *::before, *::after) {
         box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
       }
 
-      :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, figure) {
+      :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, blockquote, figure) {
         margin: 0;
       }
 
@@ -451,6 +451,8 @@ function isActiveNav(href: string): boolean {
       }
 
       .filter-btn {
+        appearance: none;
+        border: 1px solid transparent;
         border-radius: 0.625rem;
       }
 

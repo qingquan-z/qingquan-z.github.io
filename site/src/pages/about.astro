@@ -68,7 +68,7 @@ const aboutNavItems = [
   description={pageDescription}
   schemaType="AboutPage"
 >
-  <div class="page-stack">
+  <div class="space-y-5 pb-2 sm:space-y-7 sm:pb-4">
     <header class="page-header">
       <h1 class="page-title">{pageTitle}</h1>
       <p class="page-description">{pageDescription}</p>
@@ -76,11 +76,11 @@ const aboutNavItems = [
 
     <PageJumpNav items={aboutNavItems} />
 
-    <div class="space-y-12 sm:space-y-14">
+    <div class="space-y-9 sm:space-y-12">
       <!-- Profile / Academic Snapshot Section -->
       {
         profile.length > 0 && (
-          <section id="profile" class="content-section scroll-mt-24 space-y-4">
+          <section id="profile" class="content-section scroll-mt-8 space-y-4">
             <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
               <h2 class="section-heading">Profile</h2>
             </header>
@@ -103,14 +103,11 @@ const aboutNavItems = [
       <!-- Dual Track 1: Appointments (Experience) & Degrees (Education) -->
       {
         (experience.length > 0 || education.length > 0) && (
-          <div class={`grid grid-cols-1 gap-8 ${experience.length > 0 && education.length > 0 ? "lg:grid-cols-2" : ""} items-start`}>
+          <div class:list={["grid grid-cols-1 items-start gap-8", experience.length > 0 && education.length > 0 && "lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"]}>
             {experience.length > 0 && (
-              <section id="experience" class="content-section scroll-mt-24 space-y-4">
-                <header class="flex items-end justify-between gap-4 border-b border-paper-300/90 pb-3 dark:border-ink-700">
+              <section id="experience" class="content-section scroll-mt-8 space-y-4">
+                <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
                   <h2 class="section-heading">Experience</h2>
-                  <p class="font-mono text-xs font-semibold tabular-nums text-ink-500 dark:text-paper-400">
-                    {experience.length} {experience.length === 1 ? "appointment" : "appointments"}
-                  </p>
                 </header>
 
                 <div class="relative pl-6 sm:pl-7 border-l-2 border-paper-300/90 dark:border-ink-700 space-y-7 ml-2.5 my-3">
@@ -153,12 +150,9 @@ const aboutNavItems = [
             )}
 
             {education.length > 0 && (
-              <section id="education" class="content-section scroll-mt-24 space-y-4">
-                <header class="flex items-end justify-between gap-4 border-b border-paper-300/90 pb-3 dark:border-ink-700">
+              <section id="education" class="content-section scroll-mt-8 space-y-4">
+                <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
                   <h2 class="section-heading">Education</h2>
-                  <p class="font-mono text-xs font-semibold tabular-nums text-ink-500 dark:text-paper-400">
-                    {education.length} {education.length === 1 ? "degree" : "degrees"}
-                  </p>
                 </header>
 
                 <div class="relative pl-6 sm:pl-7 border-l-2 border-paper-300/90 dark:border-ink-700 space-y-7 ml-2.5 my-3">
@@ -196,12 +190,9 @@ const aboutNavItems = [
         (service.length > 0 || customSections.length > 0) && (
           <div class={`grid grid-cols-1 gap-8 ${service.length > 0 && customSections.length > 0 ? "lg:grid-cols-2" : ""} items-start`}>
             {service.length > 0 && (
-              <section id="service" class="content-section scroll-mt-24 space-y-4">
-                <header class="flex items-end justify-between gap-4 border-b border-paper-300/90 pb-3 dark:border-ink-700">
+              <section id="service" class="content-section scroll-mt-8 space-y-4">
+                <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
                   <h2 class="section-heading">Academic Service</h2>
-                  <p class="font-mono text-xs font-semibold tabular-nums text-ink-500 dark:text-paper-400">
-                    {service.length} {service.length === 1 ? "record" : "records"}
-                  </p>
                 </header>
 
                 <div class="space-y-3">
@@ -242,17 +233,14 @@ const aboutNavItems = [
             {customSections.length > 0 && (() => {
               const primarySection = customSections[0];
               return (
-                <section id={primarySection.id} class="content-section scroll-mt-24 space-y-4">
-                  <header class="flex items-end justify-between gap-4 border-b border-paper-300/90 pb-3 dark:border-ink-700">
+                <section id={primarySection.id} class="content-section scroll-mt-8 space-y-4">
+                  <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
                     <h2 class="section-heading flex items-center gap-2">
                       {primarySection.icon && (
                         <span class={`${primarySection.icon} text-accent-600 dark:text-accent-300`} aria-hidden="true"></span>
                       )}
                       <span>{primarySection.title}</span>
                     </h2>
-                    <p class="font-mono text-xs font-semibold tabular-nums text-ink-500 dark:text-paper-400">
-                      {primarySection.items?.length || 0} {(primarySection.items?.length || 0) === 1 ? "record" : "records"}
-                    </p>
                   </header>
 
                   <div class="space-y-3">
@@ -347,7 +335,7 @@ const aboutNavItems = [
       <!-- Remaining Custom Sections (if any) -->
       {
         customSections.slice(1).map((section) => (
-          <section id={section.id} class="content-section scroll-mt-24 space-y-4">
+          <section id={section.id} class="content-section scroll-mt-8 space-y-4">
             <header class="border-b border-paper-300/90 pb-3 dark:border-ink-700">
               <h2 class="section-heading flex items-center gap-2">
                 {section.icon && (

@@ -57,7 +57,13 @@ Image fixture.
 `);
 	await write('src/data/publications.bib', '@article{single,title={Single paper},year=2025,public={yes}}\n% trailing comment\n');
 	if (browserMode) {
-		await write('src/data/publications.bib', '@article{single,title={Single paper},author={Doe, Jane},year=2025,public={yes}}\n@article{working,title={Working paper},year=2026,public={wp}}\n');
+		await write('src/data/publications.bib', `@article{single,
+title={Single paper},author={Doe, Jane},year=2025,public={yes},
+url={https://example.edu/paper},
+abstract={This abstract should appear below the publication actions and fit within the reading area on narrow screens.}
+}
+@article{working,title={Working paper},year=2026,public={wp}}
+`);
 	}
 	await write('src/content/posts/regression/note.mdx', `---
 title: Regression note

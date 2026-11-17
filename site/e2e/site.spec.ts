@@ -29,6 +29,7 @@ test('mobile menu supports Escape, breakpoint changes, and navigation', async ({
 	await toggle.click();
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await expect(menu).toBeHidden();
+	await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 	await page.setViewportSize({ width: 320, height: 900 });
 	await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 	await toggle.click();
@@ -73,6 +74,28 @@ test('filters restore deep links and preserve unrelated URL state', async ({ pag
 	await page.goto('/researches/?filter=unknown');
 	await expect(page.locator('[data-filter="all"]')).toHaveAttribute('aria-pressed', 'true');
 	await expect(page.locator('[data-filter-section]:visible')).toHaveCount(2);
+});
+
+test('publication abstracts open below the action row and keep keyboard focus', async ({ page }) => {
+	await page.setViewportSize({ width: 320, height: 740 });
+	await page.goto('/researches/');
+	const disclosure = page.locator('summary[aria-label="Abstract for Single paper"]');
+	const panel = page.locator('.publication-description').filter({ has: disclosure }).locator('.publication-abstract');
+	await expect(panel).toBeHidden();
+	await disclosure.focus();
+	const before = (await disclosure.boundingBox())!;
+	await disclosure.press('Enter');
+	await expect(panel).toBeVisible();
+	await expect(disclosure).toBeFocused();
+	const after = (await disclosure.boundingBox())!;
+	const expanded = (await panel.boundingBox())!;
+	expect(after.x).toBeCloseTo(before.x);
+	expect(after.y).toBeCloseTo(before.y);
+	expect(expanded.y).toBeGreaterThanOrEqual(after.y + after.height);
+	expect(expanded.width).toBeGreaterThan(after.width);
+	expect(expanded.x + expanded.width).toBeLessThanOrEqual(320);
+	await disclosure.press('Enter');
+	await expect(panel).toBeHidden();
 });
 
 test('citation formats, native clipboard, and dialog focus work', async ({ page, context, browserName }) => {

@@ -42,7 +42,7 @@ const {
 ---
 
 <article class="page-stack">
-  <header class="space-y-6 border-b border-paper-300/90 pb-7 pt-2 dark:border-ink-700 sm:space-y-7 sm:pb-9">
+  <header class="space-y-3 border-b border-paper-300/90 pb-5 pt-2 dark:border-ink-700 sm:space-y-4 sm:pb-7">
     <a href={backHref} class="action-link w-fit px-0">
       <span class="i-mdi:arrow-left" aria-hidden="true"></span>
       {backLabel}
@@ -50,7 +50,7 @@ const {
 
     <div class="max-w-[50rem] space-y-4">
       <h1
-        class="page-title max-w-[16ch] sm:text-[3.25rem]"
+        class="page-title max-w-[23ch] sm:text-[3.25rem]"
         transition:name={`${transitionKey}-title`}
       >
         {title}
@@ -83,7 +83,7 @@ const {
   )}
 
   <div class="grid gap-8 sm:gap-9 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start lg:gap-14">
-    <div class="order-2 min-w-0 space-y-8 lg:order-1">
+    <div class="min-w-0 space-y-8">
       {highlights.length > 0 && (
         <section class="border-y border-paper-300/90 py-5 dark:border-ink-700" aria-labelledby="detail-highlights">
           <h2 id="detail-highlights" class="entry-title mb-3 text-[1.125rem]">Highlights</h2>
@@ -111,7 +111,7 @@ const {
       </div>
     </div>
 
-    <aside class="order-1 space-y-6 lg:order-2 lg:sticky lg:top-24" aria-label="Details and resources">
+    <aside class="space-y-6 lg:sticky lg:top-24" aria-label="Details and resources">
       {facts.length > 0 && (
         <section class="rounded-2xl bg-paper-100/90 p-4 dark:bg-ink-900/70 sm:p-5" aria-labelledby="detail-facts">
           <h2 id="detail-facts" class="entry-title mb-4 text-[1.125rem]">Details</h2>
