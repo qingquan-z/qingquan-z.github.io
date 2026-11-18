@@ -14,6 +14,32 @@ test.beforeEach(async ({ page, baseURL }) => {
 });
 test.afterEach(() => expect(errors, 'No browser exceptions or failed local assets').toEqual([]));
 
+test('visitor map reloads once when returning to the homepage', async ({ page }) => {
+	let widgetLoads = 0;
+	await page.route('https://mapmyvisitors.com/map.js?**', (route) => {
+		widgetLoads++;
+		return route.fulfill({ contentType: 'application/javascript', body: `
+		(() => {
+			const embed = document.getElementById('mapmyvisitors');
+			embed.insertAdjacentHTML('afterend', '<a id="mapmyvisitors-widget" href="https://mapmyvisitors.com/web/1c9k4">Visitor map</a>');
+		})();
+		` });
+	});
+	await page.goto('/');
+	await expect(page.locator('#mapmyvisitors-widget')).toHaveCount(1);
+	await expect(page.locator('.visitor-card').getByRole('link', { name: /Visitor statistics/ }))
+		.toHaveAttribute('href', 'https://mapmyvisitors.com/web/1c9k4');
+	await page.getByRole('navigation', { name: 'Primary navigation', exact: true })
+		.getByRole('link', { name: 'About', exact: true }).click();
+	await expect(page).toHaveURL(/\/about\/?$/);
+	await expect(page.locator('.visitor-card')).toHaveCount(0);
+	await page.getByRole('banner').getByRole('link', { name: 'Qingquan Zhang', exact: true }).click();
+	await expect(page.locator('#mapmyvisitors-widget')).toHaveCount(1);
+	expect(widgetLoads).toBe(2);
+	await page.setViewportSize({ width: 320, height: 900 });
+	await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});
+
 test('conference page opens from academic activities and returns to the homepage', async ({ page }) => {
 	await page.setViewportSize({ width: 320, height: 900 });
 	await page.goto('/');

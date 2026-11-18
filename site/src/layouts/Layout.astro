@@ -1,6 +1,7 @@
 ---
 import { SEO } from "astro-seo";
 import { ClientRouter } from "astro:transitions";
+import VisitorMap from "../components/VisitorMap.astro";
 import "uno.css";
 import {
   buildAbsoluteUrl,
@@ -785,6 +786,7 @@ function isActiveNav(href: string): boolean {
 
       <main id="main-content" tabindex="-1" class="flex-1 space-y-6 sm:space-y-7">
         <slot />
+        {isHomePage && <VisitorMap />}
       </main>
 
       <footer

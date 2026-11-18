@@ -15,4 +15,5 @@ pnpm dev
 - Edit appointments, education, and service in `src/data/about.yml`.
 - Edit publication records in `src/data/publications.bib`. Use `featured = {yes}` to feature a paper on the homepage and `summary` for a short author-written description. Use `abstract` for the paper's abstract.
 - Edit projects in `src/content/projects/`.
+- The homepage visitor map uses the site's public MapMyVisitors embed in `src/components/VisitorMap.astro`. Its live pageview counter and location markers come from the provider; detailed statistics are at https://mapmyvisitors.com/web/1c9k4. Counts begin with installation.
 - The locally saved CV source is in `cv-source/`. Git ignores this directory, and Astro serves static files from `public/`.

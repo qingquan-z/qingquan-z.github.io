@@ -1,0 +1,106 @@
+---
+// Public embed identifier from this site's MapMyVisitors dashboard.
+const widgetUrl = "https://mapmyvisitors.com/map.js?cl=b2c4ca&w=a&t=tt&d=dS34j-rmpJvs-r249OPWkG6Bz_w0Cy6OhnLKvF4e_ZQ&co=f3f5f7&cmo=41948c&cmn=22675f&ct=52636d";
+const statisticsUrl = "https://mapmyvisitors.com/web/1c9k4";
+---
+
+<section class="visitor-card" aria-labelledby="visitor-map-heading">
+  <header class="visitor-header">
+    <p class="visitor-eyebrow">Around the world</p>
+    <h2 id="visitor-map-heading">People who stopped by</h2>
+  </header>
+  <div class="visitor-map" aria-label="World map of visitors, with pageview count">
+    <script is:inline data-astro-rerun id="mapmyvisitors" src={widgetUrl} async></script>
+    <noscript>
+      <a href={statisticsUrl} target="_blank" rel="noopener noreferrer">
+        <img
+          src="https://mapmyvisitors.com/map.png?d=dS34j-rmpJvs-r249OPWkG6Bz_w0Cy6OhnLKvF4e_ZQ&cl=b2c4ca&co=f3f5f7&cmo=41948c&cmn=22675f&ct=52636d&t=tt&w=550"
+          alt="Visitor map and pageview count — view visitor statistics"
+          width="550"
+          height="290"
+        />
+      </a>
+    </noscript>
+  </div>
+  <div class="visitor-caption">
+    <span class="visitor-credit"><span aria-hidden="true"></span>MapMyVisitors</span>
+    <a href={statisticsUrl} target="_blank" rel="noopener noreferrer">
+      Visitor statistics <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .visitor-card {
+    width: min(100%, 37rem);
+    margin: 2.5rem auto 0;
+    padding: 1.5rem;
+    border: 1px solid #dce4e8;
+    border-radius: 0.875rem;
+    background: #f3f5f7;
+    color: #52636d;
+  }
+  .visitor-header { margin-bottom: 1rem; }
+  .visitor-eyebrow {
+    margin-bottom: 0.25rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  h2 {
+    color: #253d46;
+    font-family: "Crimson Pro", Georgia, serif;
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .visitor-map { min-height: 10rem; }
+  .visitor-map :global(img) { display: block; max-width: 100%; height: auto; }
+  .visitor-map :global(#mapmyvisitors-widget) {
+    max-width: 100%;
+    min-height: 0;
+  }
+  .visitor-map :global(.mapmyvisitors-map) {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 2.04;
+    background-size: 100% 100%;
+  }
+  /* Keep the provider's actual visitor markers above a dotted land silhouette. */
+  .visitor-map :global(.mapmyvisitors-map)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(#f3f5f7, #f3f5f7) left bottom / 6% 24% no-repeat,
+      radial-gradient(circle, transparent 1px, #f3f5f7 1.3px) 0 0 / 5px 5px;
+    pointer-events: none;
+  }
+  .visitor-map :global(.mapmyvisitors-visitors) {
+    padding-bottom: 0.75rem;
+    font-family: inherit !important;
+  }
+  .visitor-map :global(.jvectormap-zoomin),
+  .visitor-map :global(.jvectormap-zoomout) { display: none; }
+  .visitor-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+  }
+  .visitor-credit { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .visitor-credit > span { width: 0.375rem; height: 0.375rem; border-radius: 50%; background: #41948c; }
+  .visitor-caption a { color: #22675f; text-underline-offset: 0.2em; }
+  .visitor-caption a:hover { text-decoration: underline; }
+  :global(html.dark) .visitor-card { background: #161c1f; border-color: #303c42; color: #acbcc4; }
+  :global(html.dark) h2 { color: #e2ebef; }
+  :global(html.dark) .visitor-map { filter: invert(1) hue-rotate(180deg); mix-blend-mode: lighten; }
+  :global(html.dark) .visitor-caption a { color: #8ac9c1; }
+  @media (max-width: 400px) {
+    .visitor-card { padding: 1rem; }
+    .visitor-map { min-height: 8rem; }
+  }
+</style>
