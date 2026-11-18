@@ -8,7 +8,12 @@ import { withTrailingSlash } from "./src/lib/site-url";
 
 export default defineConfig({
 	site: withTrailingSlash(siteConfig.siteUrl),
-	integrations: [sitemap(), mdx()],
+	integrations: [
+		sitemap({
+			customPages: [new URL("cec2027-games/", withTrailingSlash(siteConfig.siteUrl)).href],
+		}),
+		mdx(),
+	],
 	vite: {
 		build: {
 			assetsInlineLimit: 0,

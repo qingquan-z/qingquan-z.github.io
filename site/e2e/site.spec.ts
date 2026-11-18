@@ -14,6 +14,31 @@ test.beforeEach(async ({ page, baseURL }) => {
 });
 test.afterEach(() => expect(errors, 'No browser exceptions or failed local assets').toEqual([]));
 
+test('conference page loads its own assets and returns to the homepage', async ({ page }) => {
+	await page.setViewportSize({ width: 320, height: 900 });
+	await page.goto('/');
+	const sessionLink = page.getByRole('link', { name: 'CEC 2027 · Special Session on Games', exact: true });
+	await expect(sessionLink).toHaveAttribute('data-astro-reload', '');
+	await sessionLink.click();
+	await expect(page).toHaveURL(/\/cec2027-games\/$/);
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Special Session on Games');
+	await expect(page.locator('.schedule tbody tr')).toHaveCount(4);
+	await expect(page.locator('time[datetime="2027-02-28"]')).toHaveText('28 Feb 2027');
+	await expect(page.locator('#qingquan-zhang')).toContainText('M.S. degree in Computer Science and Technology from SUSTech in 2022');
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://qingquan-z.github.io/cec2027-games/');
+	await page.getByRole('link', { name: 'Dates', exact: true }).click();
+	await expect(page).toHaveURL(/#dates$/);
+	await expect(page.getByRole('heading', { name: 'Important dates', exact: true })).toBeInViewport();
+	for (const fontSize of ['16px', '32px']) {
+		await page.locator('html').evaluate((element, size) => { element.style.fontSize = size; }, fontSize);
+		await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+	}
+	await page.getByRole('link', { name: 'Qingquan Zhang · Homepage', exact: true }).click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Qingquan Zhang');
+	await page.getByRole('link', { name: 'Selected work', exact: true }).click();
+	await expect(page).toHaveURL(/#selected-publications$/);
+});
+
 test('mobile menu supports Escape, breakpoint changes, and navigation', async ({ page }) => {
 	await page.setViewportSize({ width: 320, height: 900 });
 	await page.goto('/');
