@@ -406,6 +406,13 @@ a:focus-visible {
   line-height: 1.68;
 }
 
+.main-copy,
+.bio p {
+  text-align: justify;
+  text-indent: 0;
+  hyphens: auto;
+}
+
 .topics {
   margin-block-start: 2.45rem;
   border: 1px solid var(--rule);
@@ -449,6 +456,15 @@ a:focus-visible {
 .conference-info {
   display: grid;
   gap: clamp(2.75rem, 5vw, 4.4rem);
+}
+
+.conference-info .split-section {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.conference-info h2 {
+  font-size: clamp(1.75rem, 5vw, 3.75rem);
 }
 
 .schedule {

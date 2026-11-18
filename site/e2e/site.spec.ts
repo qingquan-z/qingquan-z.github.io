@@ -39,7 +39,14 @@ test('conference page opens from academic activities and returns to the homepage
 		await page.locator('html').evaluate((element, size) => { element.style.fontSize = size; }, fontSize);
 		await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 	}
-	await page.getByRole('link', { name: 'Qingquan Zhang · Homepage', exact: true }).click();
+	const homepageLink = page.getByRole('link', { name: 'Qingquan Zhang · Homepage', exact: true });
+	await expect(homepageLink).toHaveAttribute('href', 'https://qingquan-z.github.io/');
+	const localHomepage = new URL('/', page.url()).href;
+	await page.route('https://qingquan-z.github.io/', (route) => route.fulfill({
+		status: 302,
+		headers: { location: localHomepage },
+	}));
+	await homepageLink.click();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Qingquan Zhang');
 	await page.getByRole('link', { name: 'Selected work', exact: true }).click();
 	await expect(page).toHaveURL(/#selected-publications$/);
