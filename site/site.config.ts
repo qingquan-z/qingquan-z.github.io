@@ -32,7 +32,7 @@ export const siteConfig = defineSiteConfig({
   navLinks: [
     { href: "/about", label: "About" },
     { href: "/researches", label: "Publications" },
-    { href: "/projects", label: "Projects" },
+    { href: "/projects", label: "Research & Activities" },
   ],
   socialLinks: [
     { label: "Google Scholar", href: "https://scholar.google.com/citations?user=hXBSOkAAAAAJ", icon: "i-academicons:google-scholar" },
@@ -41,7 +41,10 @@ export const siteConfig = defineSiteConfig({
   pageTitles: {
     about: { description: "Education, research experience, and awards." },
     researches: { description: "Research on fair machine learning, multi-objective optimization, and AI in games." },
-    projects: { description: "Research platforms and code for fair machine learning, AI in games, and multi-objective optimization." },
+    projects: {
+      title: "Research & Activities",
+      description: "Research platforms, open-source code, and academic activities in fair machine learning, AI in games, and multi-objective optimization.",
+    },
   },
   homeBlocks: {
     showcase: { enabled: false },

@@ -9,6 +9,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft)).so
   (a, b) => a.data.order - b.data.order,
 );
 const groups = [
+  { key: "activity", title: "Academic activities", label: "Academic activities", icon: "i-mdi:calendar" },
   { key: "platform", title: "Platforms", label: "Platforms", icon: "i-mdi:application-outline" },
   { key: "code", title: "Research code", label: "Research code", icon: "i-mdi:code-braces" },
   { key: "active", title: "Active projects", label: "Active", icon: "i-mdi:rocket-launch" },
@@ -30,7 +31,7 @@ const pageDescription = siteConfig.pageTitles.projects.description ||
       <p class="page-description">{pageDescription}</p>
 
       <FilterBar
-        allIcon="i-mdi:code-braces"
+        allIcon="i-mdi:folder-open"
         total={projects.length}
         items={groups.map((group) => ({
           filter: group.key,
@@ -52,12 +53,17 @@ const pageDescription = siteConfig.pageTitles.projects.description ||
             <h2 id={`projects-${group.key}`} class="section-heading">{group.title}</h2>
           </header>
 
-          <div class:list={["grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2", group.key !== "code" && "lg:grid-cols-3"]}>
+          <div class:list={["grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2", group.key === "platform" && "lg:grid-cols-3"]}>
             {group.projects.map((project) => {
               const isFeatured = project.data.featured;
               const role = project.data.metadata?.find((item) => item.label.toLowerCase() === "role")?.value;
               const isActive = project.data.status === "active";
               const primaryLink = project.data.category ? project.data.links[0] : undefined;
+              const primaryUrl = primaryLink ? new URL(primaryLink.href) : undefined;
+              const isLocalLink = primaryUrl?.origin === new URL(siteConfig.siteUrl).origin;
+              const primaryHref = isLocalLink && primaryUrl
+                ? `${primaryUrl.pathname}${primaryUrl.search}${primaryUrl.hash}`
+                : primaryLink?.href;
 
               return (
                 <article
@@ -154,12 +160,13 @@ const pageDescription = siteConfig.pageTitles.projects.description ||
                     )}
 
                     <a
-                      href={primaryLink?.href ?? `/projects/${project.id}`}
+                      href={primaryHref ?? `/projects/${project.id}`}
+                      data-astro-reload={isLocalLink ? true : undefined}
                       class="action-link text-xs font-semibold px-0 group-hover:text-accent-900 dark:group-hover:text-accent-100"
                     >
                       <span>{primaryLink?.label ?? "View details"}</span>
                       <span
-                        class:list={["text-sm", primaryLink ? "i-mdi:open-in-new" : "i-mdi:arrow-right"]}
+                        class:list={["text-sm", primaryLink && !isLocalLink ? "i-mdi:open-in-new" : "i-mdi:arrow-right"]}
                         aria-hidden="true"
                       />
                     </a>

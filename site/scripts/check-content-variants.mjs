@@ -102,6 +102,10 @@ order: 99
 ---
 Project details.
 `);
+	if (browserMode) {
+		await write('src/content/projects/cec2027-games.md',
+			await readFile(join(project, 'src/content/projects/cec2027-games.md'), 'utf8'));
+	}
 	await write('src/content/teaching/regression/course.md', `---
 title: Nested course
 code: TEST 101

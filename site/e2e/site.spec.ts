@@ -14,11 +14,17 @@ test.beforeEach(async ({ page, baseURL }) => {
 });
 test.afterEach(() => expect(errors, 'No browser exceptions or failed local assets').toEqual([]));
 
-test('conference page loads its own assets and returns to the homepage', async ({ page }) => {
+test('conference page opens from academic activities and returns to the homepage', async ({ page }) => {
 	await page.setViewportSize({ width: 320, height: 900 });
 	await page.goto('/');
-	const sessionLink = page.getByRole('link', { name: 'CEC 2027 · Special Session on Games', exact: true });
-	await expect(sessionLink).toHaveAttribute('data-astro-reload', '');
+	await page.getByRole('button', { name: 'Open navigation menu', exact: true }).click();
+	await page.getByRole('navigation', { name: 'Mobile navigation', exact: true })
+		.getByRole('link', { name: 'Research & Activities', exact: true }).click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Research & Activities');
+	await page.getByRole('button', { name: 'Academic activities 1', exact: true }).click();
+	const sessionLink = page.locator('[data-filter-section="activity"]')
+		.getByRole('link', { name: 'Visit session website', exact: true });
+	await expect(sessionLink).toHaveAttribute('data-astro-reload', 'true');
 	await sessionLink.click();
 	await expect(page).toHaveURL(/\/cec2027-games\/$/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Special Session on Games');
@@ -58,7 +64,7 @@ test('mobile menu supports Escape, breakpoint changes, and navigation', async ({
 	await page.setViewportSize({ width: 320, height: 900 });
 	await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 	await toggle.click();
-	await menu.getByRole('link', { name: 'Projects', exact: true }).click();
+	await menu.getByRole('link', { name: 'Research & Activities', exact: true }).click();
 	await expect(page).toHaveURL(/\/projects\/?$/);
 	await expect(menu).toBeHidden();
 	await expect(page.getByRole('heading', { name: 'Nested project' })).toBeVisible();
