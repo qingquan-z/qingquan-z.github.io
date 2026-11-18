@@ -472,7 +472,7 @@ a:focus-visible {
   border-collapse: collapse;
   border-block-start: 1px solid #d7d6cf;
   table-layout: fixed;
-  text-align: left;
+  text-align: center;
 }
 
 .schedule th,
@@ -500,7 +500,14 @@ a:focus-visible {
 }
 
 .schedule-details {
+  width: min(100%, 52rem);
   min-width: 0;
+  justify-self: center;
+  text-align: center;
+}
+
+#authors > p {
+  text-align: center;
 }
 
 .schedule-source {
